@@ -38,9 +38,9 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] bg-gray-800 border-gray-600 text-white">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Mail className="h-5 w-5" />
             Contact Sebastian Raschka
           </DialogTitle>
@@ -49,7 +49,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name">Name *</Label>
+              <Label htmlFor="name" className="text-gray-300">Name *</Label>
               <Input
                 id="name"
                 name="name"
@@ -57,10 +57,11 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 onChange={handleChange}
                 required
                 placeholder="Your full name"
+                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               />
             </div>
             <div>
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email" className="text-gray-300">Email *</Label>
               <Input
                 id="email"
                 name="email"
@@ -69,12 +70,13 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 onChange={handleChange}
                 required
                 placeholder="your@email.com"
+                className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               />
             </div>
           </div>
           
           <div>
-            <Label htmlFor="subject">Subject *</Label>
+            <Label htmlFor="subject" className="text-gray-300">Subject *</Label>
             <Input
               id="subject"
               name="subject"
@@ -82,11 +84,12 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               onChange={handleChange}
               required
               placeholder="What would you like to discuss?"
+              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
             />
           </div>
           
           <div>
-            <Label htmlFor="message">Message *</Label>
+            <Label htmlFor="message" className="text-gray-300">Message *</Label>
             <Textarea
               id="message"
               name="message"
@@ -95,26 +98,27 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               required
               rows={6}
               placeholder="Please share your questions, collaboration ideas, or any other inquiries..."
+              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
             />
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onClose} className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+            <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
               <Send className="mr-2 h-4 w-4" />
               Send Message
             </Button>
           </div>
         </form>
         
-        <div className="mt-6 pt-6 border-t">
-          <p className="text-sm text-gray-600">
+        <div className="mt-6 pt-6 border-t border-gray-600">
+          <p className="text-sm text-gray-400">
             You can also reach out directly at{" "}
             <a 
               href="mailto:sebastianraschka@gmail.com" 
-              className="text-blue-600 hover:underline"
+              className="text-blue-400 hover:underline"
             >
               sebastianraschka@gmail.com
             </a>

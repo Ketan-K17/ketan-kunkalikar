@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Menu, X, ExternalLink, Github, Linkedin, Mail, Book, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,22 +56,22 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <nav className="bg-gray-900 border-b border-gray-700 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">Sebastian Raschka</h1>
+              <h1 className="text-xl font-bold text-white">Sebastian Raschka</h1>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-                <a href="#publications" className="text-gray-700 hover:text-blue-600 transition-colors">Publications</a>
-                <a href="#books" className="text-gray-700 hover:text-blue-600 transition-colors">Books</a>
-                <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">About</a>
+                <a href="#publications" className="text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
+                <a href="#books" className="text-gray-300 hover:text-blue-400 transition-colors">Books</a>
+                <a href="#contact" className="text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
               </div>
             </div>
 
@@ -80,6 +81,7 @@ const Index = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:bg-gray-800"
               >
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
@@ -90,45 +92,45 @@ const Index = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-              <a href="#about" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              <a href="#publications" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Publications</a>
-              <a href="#books" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Books</a>
-              <a href="#contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-900 border-t border-gray-700">
+              <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">About</a>
+              <a href="#publications" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
+              <a href="#books" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Books</a>
+              <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
             </div>
           </div>
         )}
       </nav>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                 Sebastian Raschka
               </h1>
-              <p className="text-xl text-gray-600 mb-4">
+              <p className="text-xl text-gray-300 mb-4">
                 Machine Learning Researcher & Author
               </p>
-              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed">
                 Assistant Professor of Statistics at University of Wisconsin-Madison. 
                 Author of bestselling machine learning books and open-source contributor 
                 passionate about making AI education accessible.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button 
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
                   onClick={() => setIsContactModalOpen(true)}
                 >
                   <Mail className="mr-2 h-4 w-4" />
                   Contact
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white">
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white">
                   <Linkedin className="mr-2 h-4 w-4" />
                   LinkedIn
                 </Button>
@@ -151,47 +153,47 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">About</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">About</h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="border-gray-600 bg-gray-700 shadow-lg hover:shadow-xl transition-shadow">
               <CardContent className="p-8 text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <GraduationCap className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Education</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-4 text-white">Education</h3>
+                <p className="text-gray-300">
                   Ph.D. in Computational Biology from Michigan State University. 
                   Specialized in machine learning applications in bioinformatics.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="border-gray-600 bg-gray-700 shadow-lg hover:shadow-xl transition-shadow">
               <CardContent className="p-8 text-center">
                 <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Book className="h-8 w-8 text-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Research</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-4 text-white">Research</h3>
+                <p className="text-gray-300">
                   Focus on deep learning, computational statistics, and machine learning 
                   with applications in computer vision and natural language processing.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
+            <Card className="border-gray-600 bg-gray-700 shadow-lg hover:shadow-xl transition-shadow">
               <CardContent className="p-8 text-center">
                 <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Award className="h-8 w-8 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Teaching</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-semibold mb-4 text-white">Teaching</h3>
+                <p className="text-gray-300">
                   Assistant Professor at UW-Madison, teaching machine learning and statistics. 
                   Passionate about making complex concepts accessible.
                 </p>
@@ -202,16 +204,16 @@ const Index = () => {
       </section>
 
       {/* Books Section */}
-      <section id="books" className="py-20 bg-gray-50">
+      <section id="books" className="py-20 bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Books</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Books</h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {books.map((book, index) => (
-              <Card key={index} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow">
+              <Card key={index} className="overflow-hidden border-gray-600 bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="md:flex">
                   <div className="md:w-1/3">
                     <img
@@ -222,13 +224,13 @@ const Index = () => {
                   </div>
                   <CardContent className="md:w-2/3 p-8">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+                      <span className="text-sm font-medium text-blue-400 bg-blue-900 px-3 py-1 rounded-full">
                         {book.year}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">{book.title}</h3>
-                    <p className="text-gray-600 mb-6">{book.description}</p>
-                    <Button variant="outline" size="sm">
+                    <h3 className="text-xl font-semibold text-white mb-4">{book.title}</h3>
+                    <p className="text-gray-300 mb-6">{book.description}</p>
+                    <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       View Book
                     </Button>
@@ -241,30 +243,30 @@ const Index = () => {
       </section>
 
       {/* Publications Section */}
-      <section id="publications" className="py-20 bg-white">
+      <section id="publications" className="py-20 bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Selected Publications</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Selected Publications</h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
           </div>
           
           <div className="space-y-6">
             {publications.map((pub, index) => (
-              <Card key={index} className="border-l-4 border-l-blue-600 border-t-0 border-r-0 border-b-0 shadow-sm hover:shadow-md transition-shadow">
+              <Card key={index} className="border-l-4 border-l-blue-600 border-t-0 border-r-0 border-b-0 bg-gray-700 shadow-sm hover:shadow-md transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                        <span className="text-sm font-medium text-blue-400 bg-blue-900 px-2 py-1 rounded">
                           {pub.type}
                         </span>
-                        <span className="text-sm text-gray-500">{pub.year}</span>
+                        <span className="text-sm text-gray-400">{pub.year}</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{pub.title}</h3>
-                      <p className="text-gray-600 mb-3">{pub.description}</p>
-                      <p className="text-sm font-medium text-gray-700">{pub.journal}</p>
+                      <h3 className="text-lg font-semibold text-white mb-2">{pub.title}</h3>
+                      <p className="text-gray-300 mb-3">{pub.description}</p>
+                      <p className="text-sm font-medium text-gray-400">{pub.journal}</p>
                     </div>
-                    <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4">
+                    <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4 text-gray-300 hover:bg-gray-600 hover:text-white">
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   </div>
@@ -276,7 +278,7 @@ const Index = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-900 text-white">
+      <section id="contact" className="py-20 bg-gray-950 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
@@ -291,7 +293,7 @@ const Index = () => {
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Button 
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={() => setIsContactModalOpen(true)}
               >
                 <Mail className="mr-2 h-4 w-4" />
@@ -312,7 +314,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-950 text-gray-400 py-8">
+      <footer className="bg-black text-gray-400 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p>&copy; 2024 Sebastian Raschka. All rights reserved.</p>
