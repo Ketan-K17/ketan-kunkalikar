@@ -1,11 +1,12 @@
-
 import { useState } from "react";
 import { Menu, X, ExternalLink, Github, Linkedin, Mail, Book, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import ContactModal from "@/components/ContactModal";
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const publications = [
     {
@@ -116,7 +117,10 @@ const Index = () => {
                 passionate about making AI education accessible.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={() => setIsContactModalOpen(true)}
+                >
                   <Mail className="mr-2 h-4 w-4" />
                   Contact
                 </Button>
@@ -286,7 +290,10 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700"
+                onClick={() => setIsContactModalOpen(true)}
+              >
                 <Mail className="mr-2 h-4 w-4" />
                 sebastianraschka@gmail.com
               </Button>
@@ -312,6 +319,12 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 };
