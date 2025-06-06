@@ -42,7 +42,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-white">
             <Mail className="h-5 w-5" />
-            Contact Sebastian Raschka
+            Contact Ketan Kunkalikar
           </DialogTitle>
         </DialogHeader>
         
@@ -103,11 +103,11 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={onClose} className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white">
+            <Button type="button" variant="outline" onClick={onClose} className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200">
               Cancel
             </Button>
             <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
-              <Send className="mr-2 h-4 w-4" />
+              <Send className="mr-2 h-4 w-4" /> 
               Send Message
             </Button>
           </div>
@@ -117,10 +117,10 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
           <p className="text-sm text-gray-400">
             You can also reach out directly at{" "}
             <a 
-              href="mailto:sebastianraschka@gmail.com" 
+              href="mailto:ketankunkalikar33@gmail.com" 
               className="text-blue-400 hover:underline"
             >
-              sebastianraschka@gmail.com
+              ketankunkalikar33@gmail.com
             </a>
           </p>
         </div>
