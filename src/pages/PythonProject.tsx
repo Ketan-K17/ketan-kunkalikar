@@ -31,7 +31,7 @@ const PythonProject = () => {
           </h1>
           <div className="aspect-video rounded-lg overflow-hidden mb-12">
             <img
-              src="public/images/python_learning.png"
+              src="/images/python_learning.png"
               alt="Python Learning Journey"
               className="w-full h-full object-cover"
             />

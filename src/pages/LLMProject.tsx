@@ -31,7 +31,7 @@ const LLMProject = () => {
           </h1>
           <div className="aspect-video rounded-lg overflow-hidden mb-12">
             <img
-              src="public/images/llm_architecture.png"
+              src="/images/llm_architecture.png"
               alt="LLM Architecture"
               className="w-full h-full object-cover"
             />
