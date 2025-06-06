@@ -2,11 +2,28 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import ScrollToHashElement from "@cascadia-code/scroll-to-hash-element";
+import { useEffect } from "react";
 import Index from "./pages/Index";
+import LLMProject from "./pages/LLMProject";
+import PythonProject from "./pages/PythonProject";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+// Scroll to top only when there's no hash in the URL
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -14,8 +31,12 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
+        <ScrollToHashElement behavior="smooth" />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/llm-project" element={<LLMProject />} />
+          <Route path="/python-project" element={<PythonProject />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

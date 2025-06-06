@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, ExternalLink, Github, Linkedin, Mail, Book, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -169,8 +170,14 @@ const AnimatedBackground = () => {
 
 // ... keep existing code (Index component with all sections)
 const Index = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleNavigation = (path: string) => {
+    console.log('Navigating to:', path);
+    navigate(path);
+  };
 
   const publications = [
     {
@@ -206,16 +213,18 @@ const Index = () => {
   const projects = [
     {
       title: "Learning LLM architecture (Building a GPT-like LLM from scratch)",
-      image: "public/images/llm_from_scratch.png",
+      image: "/images/llm_from_scratch.png",
       description: "Building a GPT-like LLM from the ground-up while studying Sebastian Raschka's 'Build a Large Language Model (From Scratch)'",
       status: "In Progress",
-      link: "https://github.com/Ketan-K17/building_llms_from_scratch"
+      link: "https://github.com/Ketan-K17/building_llms_from_scratch",
+      path: "/llm-project"
     },
     {
       title: "Learning to write impeccable, production-ready Python Code",
-      image: "public/images/effective_python.png",
+      image: "/images/effective_python.png",
       description: "Currently following Brett Slatkin's take on efficient Python Coding in his book 'Effective Python'",
-      status: "In Progress"
+      status: "In Progress",
+      path: "/python-project"
     }
   ];
 
@@ -410,7 +419,7 @@ const Index = () => {
       <section id="projects" className="py-20 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">Projects / Endeavours</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Current Endeavours</h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
           </div>
           
@@ -434,7 +443,12 @@ const Index = () => {
                     <h3 className="text-xl font-semibold text-white mb-4">{project.title}</h3>
                     <p className="text-gray-300 flex-grow">{project.description}</p>
                     <div className="mt-6 flex gap-4">
-                      <Button variant="outline" size="sm" className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200"
+                        onClick={() => handleNavigation(project.path)}
+                      >
                         <ExternalLink className="mr-2 h-4 w-4" />
                         Read More
                       </Button>
