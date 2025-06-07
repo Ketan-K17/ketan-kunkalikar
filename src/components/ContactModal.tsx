@@ -1,11 +1,11 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -13,6 +13,8 @@ interface ContactModalProps {
 }
 
 const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,13 +22,54 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     message: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Contact form submitted:", formData);
-    onClose();
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      // Send email using Email.js or similar service
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+          template_params: {
+            from_name: formData.name,
+            from_email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            to_email: 'ketankunkalikar33@gmail.com', // Your email address
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      toast({
+        title: "Success!",
+        description: "Your message has been sent successfully.",
+        className: "bg-green-500 text-white",
+      });
+
+      onClose();
+      setFormData({ name: "", email: "", subject: "", message: "" });
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -58,6 +101,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 required
                 placeholder="Your full name"
                 className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                disabled={isSubmitting}
               />
             </div>
             <div>
@@ -71,6 +115,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 required
                 placeholder="your@email.com"
                 className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                disabled={isSubmitting}
               />
             </div>
           </div>
@@ -85,6 +130,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               required
               placeholder="What would you like to discuss?"
               className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              disabled={isSubmitting}
             />
           </div>
           
@@ -99,16 +145,36 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               rows={6}
               placeholder="Please share your questions, collaboration ideas, or any other inquiries..."
               className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              disabled={isSubmitting}
             />
           </div>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={onClose} className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onClose} 
+              className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200"
+              disabled={isSubmitting}
+            >
               Cancel
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
-              <Send className="mr-2 h-4 w-4" /> 
-              Send Message
+            <Button 
+              type="submit" 
+              className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4" />
+                  Send Message
+                </>
+              )}
             </Button>
           </div>
         </form>
