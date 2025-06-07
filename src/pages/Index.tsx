@@ -311,7 +311,7 @@ const Index = () => {
                     LinkedIn
                   </Button>
                 </a>
-                <a href="https://drive.google.com/file/d/1H-g5OoBjTWiaeivCW0Wqn_P51cz98wuJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/file/d/1nfo-rxXj9wNyz4s2ia-37sjEvZ-39f9s/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="border-gray-900 text-gray-900 hover:bg-gray-800 hover:text-white transform hover:scale-105 transition-all duration-200">
                     <FileText className="mr-2 h-4 w-4" />
                     Resume
@@ -538,7 +538,7 @@ const Index = () => {
                     <Linkedin className="h-4 w-4" />
                   </Button>
                 </a>
-                <a href="https://drive.google.com/file/d/1H-g5OoBjTWiaeivCW0Wqn_P51cz98wuJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/file/d/1nfo-rxXj9wNyz4s2ia-37sjEvZ-39f9s/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="icon" className="text-gray-900 border-gray-600 hover:bg-gray-800">
                     <FileText className="h-4 w-4" />
                   </Button>
