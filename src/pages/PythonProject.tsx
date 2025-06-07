@@ -94,7 +94,7 @@ const PythonProject = () => {
               <li>Complete all 90 items from "Effective Python"</li>
               <li>Build a comprehensive project implementing learned concepts</li>
               <li>Create a series of blog posts documenting key learnings</li>
-              <li>Contribute to open-source Python projects</li>
+              <li>Contribute to open-source Python endeavours</li>
               <li>Develop custom tools using advanced Python features</li>
             </ul>
           </div>

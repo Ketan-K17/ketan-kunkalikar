@@ -210,7 +210,7 @@ const Index = () => {
     }
   ];
 
-  const projects = [
+  const currentEndeavours = [
     {
       title: "Learning LLM architecture (Building a GPT-like LLM from scratch)",
       image: "/images/llm_from_scratch.png",
@@ -243,7 +243,7 @@ const Index = () => {
               <div className="ml-10 flex items-baseline space-x-8">
                 <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">About</a>
                 <a href="#publications" className="text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
-                <a href="#projects" className="text-gray-300 hover:text-blue-400 transition-colors">Projects</a>
+                <a href="#current-endeavours" className="text-gray-300 hover:text-blue-400 transition-colors">Current Endeavours</a>
                 <a href="#contact" className="text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
               </div>
             </div>
@@ -268,7 +268,7 @@ const Index = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black border-t border-gray-700">
               <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">About</a>
               <a href="#publications" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
-              <a href="#projects" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Projects</a>
+              <a href="#current-endeavours" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Current Endeavours</a>
               <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
             </div>
           </div>
@@ -416,7 +416,7 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-black">
+      <section id="current-endeavours" className="py-20 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-white mb-4">Current Endeavours</h2>
@@ -424,30 +424,30 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
+            {currentEndeavours.map((endeavour, index) => (
               <Card key={index} className="overflow-hidden border-gray-600 bg-gray-800 shadow-lg hover:shadow-xl transition-shadow h-full">
                 <div className="flex flex-col md:flex-row h-full">
                   <div className="md:w-1/3 h-64 md:h-auto relative">
                     <img
-                      src={project.image}
-                      alt={project.title}
+                      src={endeavour.image}
+                      alt={endeavour.title}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   </div>
                   <CardContent className="md:w-2/3 p-8 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-sm font-medium text-blue-400 bg-blue-900 px-3 py-1 rounded-full">
-                        {project.status}
+                        {endeavour.status}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-4">{project.title}</h3>
-                    <p className="text-gray-300 flex-grow">{project.description}</p>
+                    <h3 className="text-xl font-semibold text-white mb-4">{endeavour.title}</h3>
+                    <p className="text-gray-300 flex-grow">{endeavour.description}</p>
                     <div className="mt-6 flex gap-4">
                       <Button 
                         variant="outline" 
                         size="sm" 
                         className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200"
-                        onClick={() => handleNavigation(project.path)}
+                        onClick={() => handleNavigation(endeavour.path)}
                       >
                         <ExternalLink className="mr-2 h-4 w-4" />
                         Read More
@@ -456,7 +456,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         className="border-gray-600 text-gray-900 hover:bg-gray-700 hover:text-white transform hover:scale-105 transition-all duration-200"
-                        onClick={project.title.includes("Learning LLM architecture") ? 
+                        onClick={endeavour.title.includes("Learning LLM architecture") ? 
                           () => window.open('https://github.com/Ketan-K17/building_llms_from_scratch', '_blank') : 
                           undefined}
                       >

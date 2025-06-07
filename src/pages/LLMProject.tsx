@@ -13,7 +13,7 @@ const LLMProject = () => {
           <div className="flex items-center justify-between h-16">
             <Button
               variant="ghost"
-              onClick={() => navigate("/#projects")}
+              onClick={() => navigate("/#current-endeavours")}
               className="text-gray-300 hover:text-blue-400"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
