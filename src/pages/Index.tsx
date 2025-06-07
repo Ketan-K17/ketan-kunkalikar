@@ -514,7 +514,7 @@ const Index = () => {
           
           <div className="text-center">
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Interested in collaboration or have questions about machine learning? 
+              Interested in collaboration or got anything to discuss about LLM's and Agents?  
               Feel free to reach out.
             </p>
             
