@@ -322,9 +322,6 @@ const Index = () => {
                   alt="Ketan Kunkalikar"
                   className="w-80 h-100 rounded-full object-cover shadow-2xl hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-blue-600 text-white p-3 rounded-full animate-pulse">
-                  <GraduationCap className="h-6 w-6" />
-                </div>
               </div>
             </div>
           </div>
