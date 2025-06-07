@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, ExternalLink, Github, Linkedin, Mail, Book, GraduationCap, Award } from "lucide-react";
+import { Menu, X, ExternalLink, Github, Linkedin, Mail, Book, GraduationCap, Award, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ContactModal from "@/components/ContactModal";
@@ -183,29 +183,21 @@ const Index = () => {
     {
       title: "Machine Learning with PyTorch and Scikit-Learn",
       year: "2022",
-      journal: "Packt Publishing",
-      type: "Book",
       description: "Develop machine learning and deep learning models with Python"
     },
     {
       title: "Python Machine Learning",
       year: "2019",
-      journal: "Packt Publishing", 
-      type: "Book",
       description: "Machine Learning and Deep Learning with Python, scikit-learn, and TensorFlow"
     },
     {
       title: "Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning",
       year: "2018",
-      journal: "arXiv preprint",
-      type: "Paper",
       description: "Comprehensive guide to machine learning model evaluation techniques"
     },
     {
       title: "MLxtend: Providing machine learning and data science utilities",
       year: "2018",
-      journal: "Journal of Open Source Software",
-      type: "Paper",
       description: "A Python library of useful tools for the day-to-day data science tasks"
     }
   ];
@@ -313,6 +305,12 @@ const Index = () => {
                   <Button variant="outline" className="border-gray-900 text-gray-900 hover:bg-gray-800 hover:text-white transform hover:scale-105 transition-all duration-200">
                     <Linkedin className="mr-2 h-4 w-4" />
                     LinkedIn
+                  </Button>
+                </a>
+                <a href="https://drive.google.com/file/d/1H-g5OoBjTWiaeivCW0Wqn_P51cz98wuJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-gray-900 text-gray-900 hover:bg-gray-800 hover:text-white transform hover:scale-105 transition-all duration-200">
+                    <FileText className="mr-2 h-4 w-4" />
+                    Resume
                   </Button>
                 </a>
               </div>
@@ -487,14 +485,10 @@ const Index = () => {
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-sm font-medium text-blue-400 bg-blue-900 px-2 py-1 rounded">
-                          {project.type}
-                        </span>
                         <span className="text-sm text-gray-400">{project.year}</span>
                       </div>
                       <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
-                      <p className="text-gray-300 mb-3">{project.description}</p>
-                      <p className="text-sm font-medium text-gray-400">{project.journal}</p>
+                      <p className="text-gray-300">{project.description}</p>
                     </div>
                     <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4 text-gray-200 hover:bg-gray-600 hover:text-white">
                       <ExternalLink className="h-4 w-4" />
@@ -539,6 +533,11 @@ const Index = () => {
                 <a href="https://www.linkedin.com/in/ketan-kunkalikar-9393b6225/" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="icon" className="text-gray-900 border-gray-600 hover:bg-gray-800">
                     <Linkedin className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a href="https://drive.google.com/file/d/1H-g5OoBjTWiaeivCW0Wqn_P51cz98wuJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="icon" className="text-gray-900 border-gray-600 hover:bg-gray-800">
+                    <FileText className="h-4 w-4" />
                   </Button>
                 </a>
               </div>
