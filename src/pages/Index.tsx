@@ -179,7 +179,7 @@ const Index = () => {
     navigate(path);
   };
 
-  const publications = [
+  const completeProjects = [
     {
       title: "Machine Learning with PyTorch and Scikit-Learn",
       year: "2022",
@@ -242,7 +242,7 @@ const Index = () => {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <a href="#about" className="text-gray-300 hover:text-blue-400 transition-colors">About</a>
-                <a href="#publications" className="text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
+                <a href="#complete-projects" className="text-gray-300 hover:text-blue-400 transition-colors">Complete Projects</a>
                 <a href="#current-endeavours" className="text-gray-300 hover:text-blue-400 transition-colors">Current Endeavours</a>
                 <a href="#contact" className="text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
               </div>
@@ -267,7 +267,7 @@ const Index = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black border-t border-gray-700">
               <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">About</a>
-              <a href="#publications" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Publications</a>
+              <a href="#complete-projects" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Complete Projects</a>
               <a href="#current-endeavours" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Current Endeavours</a>
               <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-blue-400 transition-colors">Contact</a>
             </div>
@@ -473,28 +473,28 @@ const Index = () => {
       </section>
 
       {/* Publications Section */}
-      <section id="publications" className="py-20 bg-black">
+      <section id="complete-projects" className="py-20 bg-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">Selected Publications</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Complete Projects</h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
           </div>
           
           <div className="space-y-6">
-            {publications.map((pub, index) => (
+            {completeProjects.map((project, index) => (
               <Card key={index} className="border-l-4 border-l-blue-600 border-t-0 border-r-0 border-b-0 bg-gray-700 shadow-sm hover:shadow-md transition-shadow">
                 <CardContent className="p-6">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="text-sm font-medium text-blue-400 bg-blue-900 px-2 py-1 rounded">
-                          {pub.type}
+                          {project.type}
                         </span>
-                        <span className="text-sm text-gray-400">{pub.year}</span>
+                        <span className="text-sm text-gray-400">{project.year}</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-white mb-2">{pub.title}</h3>
-                      <p className="text-gray-300 mb-3">{pub.description}</p>
-                      <p className="text-sm font-medium text-gray-400">{pub.journal}</p>
+                      <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
+                      <p className="text-gray-300 mb-3">{project.description}</p>
+                      <p className="text-sm font-medium text-gray-400">{project.journal}</p>
                     </div>
                     <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4 text-gray-200 hover:bg-gray-600 hover:text-white">
                       <ExternalLink className="h-4 w-4" />
