@@ -181,24 +181,28 @@ const Index = () => {
 
   const completeProjects = [
     {
-      title: "Machine Learning with PyTorch and Scikit-Learn",
-      year: "2022",
-      description: "Develop machine learning and deep learning models with Python"
+      title: "MCP to incorporate Deep Research Feature on Claude Desktop",
+      year: "2025",
+      description: "Developed a Langgraph workflow that does Deep Research on a given query, and incorporated it within Claude's Desktop App using an MCP server.",
+      link: "https://github.com/Ketan-K17/claude_with_dr"
     },
     {
-      title: "Python Machine Learning",
-      year: "2019",
-      description: "Machine Learning and Deep Learning with Python, scikit-learn, and TensorFlow"
+      title: "SAGAN - A Multi-Modal AI Agent Workflow to automate Grant Proposal Writing",
+      year: "2024-2025",
+      description: "Implemented and Deployed an AI-agent service that automates writing of grant proposals given a corpus of research papers / legal documents. Project was acquired by Luxembourg's Space Agency in March 2025 for USD 50K.",
+      link: "https://github.com/Ketan-K17/sagan_backend"
     },
     {
-      title: "Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning",
-      year: "2018",
-      description: "Comprehensive guide to machine learning model evaluation techniques"
+      title: "Web Navigation Automator: A Multi-Modal AI Agent Workflow to automate Web Navigation",
+      year: "2025",
+      description: "Built a Langgraph Agent Workflow that automates web navigation using Agentic Decision Making paired with Commputer Vision and Computer Control. Built as part of my final-year project.",
+      link: "https://github.com/Ketan-K17/web_automation_agent_backend"
     },
     {
-      title: "MLxtend: Providing machine learning and data science utilities",
-      year: "2018",
-      description: "A Python library of useful tools for the day-to-day data science tasks"
+      title: "Adaptive RAG App",
+      year: "2024",
+      description: "Built an AI application that performs Adaptive RAG on a given corpus of documents, and uses the retrieved documents to answer user queries. Deployed on Huggingface Spaces.",
+      link: "https://github.com/Ketan-K17/adaptive_rag_application_poc"
     }
   ];
 
@@ -487,9 +491,11 @@ const Index = () => {
                       <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
                       <p className="text-gray-300">{project.description}</p>
                     </div>
-                    <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4 text-gray-200 hover:bg-gray-600 hover:text-white">
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      <Button variant="ghost" size="sm" className="mt-3 sm:mt-0 sm:ml-4 text-gray-200 hover:bg-gray-600 hover:text-white">
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
