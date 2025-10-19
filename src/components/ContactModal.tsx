@@ -28,7 +28,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     setIsSubmitting(true);
 
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
@@ -40,10 +40,6 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
-
-      if (result.text !== 'OK') {
-        throw new Error('Failed to send message');
-      }
 
       toast({
         title: "Success!",
