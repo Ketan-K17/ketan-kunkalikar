@@ -287,7 +287,7 @@ const Index = () => {
                 AI Engineer and Agent Developer
               </p>
               <p className="text-lg text-gray-400 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                SWE Intern @<i><b>Turtlemint</b></i><br/>
+                SWE @<i><b>Turtlemint</b></i><br/>
                 Ex Agent Developer @<i><b>Spaider-Space</b></i><br/>
                 Open-Source Contributor fascinated with AI, Large Language Models, and Agentic Systems.
               </p>
@@ -311,7 +311,7 @@ const Index = () => {
                     LinkedIn
                   </Button>
                 </a>
-                <a href="https://drive.google.com/file/d/1nfo-rxXj9wNyz4s2ia-37sjEvZ-39f9s/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/file/d/1VVCyep7UQCbHhHOFrZjfG0cvBeMhuaqA/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="border-gray-900 text-gray-900 hover:bg-gray-800 hover:text-white transform hover:scale-105 transition-all duration-200">
                     <FileText className="mr-2 h-4 w-4" />
                     Resume
@@ -404,7 +404,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-4 text-white group-hover:text-purple-300 transition-colors duration-300">Occupations</h3>
                 <p className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">
-                  SWE Intern @<i><b>Turtlemint</b></i>, Ex-Agent Developer @<i><b>Spaider-Space</b></i>, Ex-Research Intern @<i><b>Distilled DDD</b></i>
+                SWE @<i><b>Turtlemint</b></i>, SWE Intern @<i><b>Turtlemint</b></i>, Ex-Agent Developer @<i><b>Spaider-Space</b></i>, Ex-Research Intern @<i><b>Distilled DDD</b></i>
                 </p>
               </CardContent>
               {/* Animated border */}
