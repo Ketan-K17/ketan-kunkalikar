@@ -311,7 +311,7 @@ const Index = () => {
                     LinkedIn
                   </Button>
                 </a>
-                <a href="https://drive.google.com/file/d/1VVCyep7UQCbHhHOFrZjfG0cvBeMhuaqA/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/file/d/1cSB45BpZCGeH8DcsyTW7Q_FglJCs-4M3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="border-gray-900 text-gray-900 hover:bg-gray-800 hover:text-white transform hover:scale-105 transition-all duration-200">
                     <FileText className="mr-2 h-4 w-4" />
                     Resume
