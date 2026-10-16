@@ -1,0 +1,14 @@
+{
+  "wallpapers": [
+    { "name": "Sea of Clouds", "file": "wallpapers/sea-of-clouds.jpg", "thumb": "wallpapers/thumbs/sea-of-clouds.jpg" },
+    { "name": "Milky Way", "file": "wallpapers/milky-way.jpg", "thumb": "wallpapers/thumbs/milky-way.jpg" },
+    { "name": "Night Sail", "file": "wallpapers/night-sail.jpg", "thumb": "wallpapers/thumbs/night-sail.jpg" },
+    { "name": "Crimson Peaks", "file": "wallpapers/crimson-peaks.jpg", "thumb": "wallpapers/thumbs/crimson-peaks.jpg" },
+    { "name": "Yukon", "file": "wallpapers/yukon.jpg", "thumb": "wallpapers/thumbs/yukon.jpg" },
+    { "name": "Green Hills", "file": "wallpapers/green-hills.jpg", "thumb": "wallpapers/thumbs/green-hills.jpg" },
+    { "name": "Shoreline", "file": "wallpapers/shoreline.jpg", "thumb": "wallpapers/thumbs/shoreline.jpg" },
+    { "name": "Beach Sunrise", "file": "wallpapers/beach-sunrise.jpg", "thumb": "wallpapers/thumbs/beach-sunrise.jpg" },
+    { "name": "Spectrum", "file": "wallpapers/spectrum.jpg", "thumb": "wallpapers/thumbs/spectrum.jpg" }
+  ],
+  "sounds": {}
+}

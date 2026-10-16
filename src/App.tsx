@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import LLMProject from "./pages/LLMProject";
 import PythonProject from "./pages/PythonProject";
 import NotFound from "./pages/NotFound";
+import TearOff from "./components/TearOff";
 
 const queryClient = new QueryClient();
 
@@ -33,13 +34,15 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <ScrollToHashElement behavior="smooth" />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/llm-project" element={<LLMProject />} />
-          <Route path="/python-project" element={<PythonProject />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <TearOff>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/llm-project" element={<LLMProject />} />
+            <Route path="/python-project" element={<PythonProject />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TearOff>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

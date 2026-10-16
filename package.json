@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "laptop:sounds": "node scripts/laptop-sounds.mjs"
   },
   "dependencies": {
     "@cascadia-code/scroll-to-hash-element": "^2.0.3",
