@@ -5,7 +5,7 @@ const STICKY_KEY = 'laptop-sticky';
 
 function readSticky() {
   try {
-    return localStorage.getItem(STICKY_KEY) ?? 'Call home.\nWater the plant.\nStay determined.';
+    return localStorage.getItem(STICKY_KEY) ?? 'Call home.\nWater the plant.\nStay determined.\nStay sane for the next 8 months';
   } catch {
     return '';
   }
