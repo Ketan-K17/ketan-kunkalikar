@@ -31,7 +31,7 @@ export const ACCENTS: Record<string, string> = {
 };
 
 const KEY = 'laptop-prefs';
-const DEFAULTS: Prefs = { scheme: 'system', accent: 'wallpaper', wallpaper: 'builtin:aurora', volume: 0.7, muted: false, uiSounds: true, style: 'glass', saverAfter: 5, analogClock: false, batteryPercent: true, dockMagnify: true };
+const DEFAULTS: Prefs = { scheme: 'system', accent: 'wallpaper', wallpaper: 'wallpapers/green-hills.jpg', volume: 0.7, muted: false, uiSounds: true, style: 'glass', saverAfter: 5, analogClock: false, batteryPercent: true, dockMagnify: true };
 
 function load(): Prefs {
   try {
