@@ -28,7 +28,7 @@ src/
   components/
     TearOff.tsx            the cover: pull-tab, the rip, the falling halves, opening the Mac
     tear-off.css           its styles (plain CSS, not Tailwind)
-    ContactModal.tsx       old site's EmailJS contact form
+    ContactModal.tsx       old site's Web3Forms contact form
     ui/                    shadcn/ui
   laptop/                  the Mac (see "The Mac" below); lazy-loaded as its own chunk
 public/
@@ -55,7 +55,7 @@ Portfolio content lives in **`src/laptop/desktop.ts`**: `DESKTOP` (folders, file
 
 - Text files (`text: [...]`, one paragraph per entry) open in TextEdit. Visitors can edit and ⌘S them; that is kept in *their* localStorage only.
 - `icon: 'image'` with `src: 'images/x.png'` shows the real picture in Preview (without `src`, a drawn placeholder). `icon: 'pdf'` with `src` shows the PDF. `icon: 'link'` with `url` is an Internet Location: opening it opens the page in a new tab. `project()` in `desktop.ts` makes a project folder (README + Repository link).
-- **Mail** (`apps/Mail.ts`, a built-in app in the Dock) is a New Message window addressed to the owner. It sends with EmailJS using the same `VITE_EMAILJS_SERVICE_ID` / `VITE_EMAILJS_TEMPLATE_ID` / `VITE_EMAILJS_PUBLIC_KEY` env vars as the old `ContactModal` (set in Vercel; locally in a git-ignored `.env`). Without them, sending shows an error in the window.
+- **Mail** (`apps/Mail.ts`, a built-in app in the Dock) is a New Message window addressed to the owner. It sends with Web3Forms (a plain `fetch`) using the same `VITE_WEB3FORMS_ACCESS_KEY` env var as the old `ContactModal` (set in Vercel; locally in a git-ignored `.env`). Without them, sending shows an error in the window.
 - Keep the old site and the Mac telling the same story: when projects, jobs or links change in `src/pages/Index.tsx`, update `desktop.ts` too.
 
 The look is **Aqua-era Mac OS X with a glass finish**, modelled on ryOS (os.ryo.lu) but written from scratch: no ryOS code or assets are copied, because ryOS is AGPL-3.0. Keep it that way.
@@ -79,7 +79,7 @@ The look is **Aqua-era Mac OS X with a glass finish**, modelled on ryOS (os.ryo.
 
 - Live site: https://ketank17.vercel.app/ (Vercel, auto-deploys `main`). Source: https://github.com/Ketan-K17/ketan-kunkalikar.
 - Pushing to `main` deploys to production immediately: run the typecheck and `npm run build` first, and push only when the owner asks.
-- The EmailJS env vars must exist in the Vercel project for Mail (and the old Contact form) to send.
+- `VITE_WEB3FORMS_ACCESS_KEY` must exist in the Vercel project for Mail (and the old Contact form) to send.
 
 ## Working with the owner
 
