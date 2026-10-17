@@ -41,12 +41,19 @@ export interface DesktopFile {
 }
 
 /**
- * The music widget (top right of the desktop) plays this Spotify playlist through Spotify's embed, with no backend. Without a Spotify login in this
- * browser the embed only plays 30-second previews. Replace the playlist with the owner's own (Spotify: Share > Copy link).
+ * The music widget plays these Spotify playlists through Spotify's embed, with no backend; the wheel's MENU > Playlists switches between them and
+ * the first one is what it starts on. Without a Spotify login in this browser the embed only plays 30-second previews. Swap any of them for the
+ * owner's own (Spotify: Share > Copy link).
  */
 export const MUSIC = {
-  /** `spotify:playlist:<id>`, or the same with `album` / `track`. */
-  uri: 'spotify:playlist:57NwRU3l6nTtuLk4b8l1qk',
+  playlists: [
+    // `name` must fit the player's little screen (about 22 characters). `uri` is `spotify:playlist:<id>`, or the same with `album` / `track`.
+    { name: '70s–80s Rock', uri: 'spotify:playlist:37i9dQZF1DWXRqgorJj26U' }, // Rock Classics
+    { name: 'Old Bollywood', uri: 'spotify:playlist:1Cwm66B4rbVLuNqo3SjJX6' }, // Classic Old Hindi Songs
+    { name: 'Classical Piano', uri: 'spotify:playlist:1dDns6RLv0HqVTFXA3XGdR' }, // Chopin - Best of (Deutsche Grammophon)
+    { name: 'Classical Sitar', uri: 'spotify:playlist:5AGVXh96ufHTVDZ4qtibPO' }, // Best of Hindustani Instrumental
+    { name: '2000s–2020s Pop', uri: 'spotify:playlist:0K8DNHMwJaZmERK4FeaAOJ' }, // POP Music Playlist - Best POP Hits of All Time
+  ],
 };
 
 /** The account on the laptop: shown in the menu bar (fast user switching), Terminal's prompt and About This Mac. */

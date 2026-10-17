@@ -26,6 +26,8 @@ interface PlaybackUpdate {
 
 interface Controller {
   togglePlay(): void;
+  play(): void;
+  loadUri(uri: string): void;
   pause(): void;
   seek(seconds: number): void;
   destroy(): void;
@@ -129,7 +131,7 @@ function saveSpot(spot: { x: number; y: number }) {
   }
 }
 
-type MenuItem = { label: string; run: () => void };
+type MenuItem = { label: string; run: () => void; /** Drawn with a ✓ instead of the › arrow. */ checked?: boolean; plain?: boolean };
 
 export class MusicPlayer {
   readonly el: HTMLElement;
@@ -150,7 +152,10 @@ export class MusicPlayer {
   private metaFor = '';
   private menuOpen = false;
   private menuSel = 0;
-  private menuItems: MenuItem[];
+  /** The menu has a second page that lists the playlists. */
+  private menuPage: 'main' | 'lists' = 'main';
+  /** Index into `MUSIC.playlists`: the first one is what it starts on. */
+  private current = 0;
 
   private screen: HTMLElement;
   private barTitle: HTMLElement;
@@ -167,12 +172,6 @@ export class MusicPlayer {
   private scrubFrom = 0;
 
   constructor() {
-    this.menuItems = [
-      { label: 'Now Playing', run: () => this.setMenu(false) },
-      { label: 'Spotify Player', run: () => (this.toggleSheet(true), this.setMenu(false)) },
-      { label: 'Open in Spotify', run: () => window.open(webUrl(MUSIC.uri), '_blank', 'noopener') },
-    ];
-
     this.barTitle = el('span', { class: 'pod-bar-t', text: 'Now Playing' });
     this.stateIco = el('span', { class: 'pod-state' });
     this.art = el('div', { class: 'pod-art', html: NOTE });
@@ -199,7 +198,7 @@ export class MusicPlayer {
 
     const key = (cls: string, label: string, html: string) => el('button', { class: `pod-key ${cls}`, type: 'button', 'aria-label': label, title: label, html });
     const keys: [HTMLElement, () => void][] = [
-      [key('k-menu', 'Menu', 'MENU'), () => this.setMenu(!this.menuOpen)],
+      [key('k-menu', 'Menu', 'MENU'), () => this.menuKey()],
       [key('k-prev', 'Back to start', PREV), () => this.prev()],
       [key('k-next', 'Next', NEXT), () => this.next()],
       [key('k-play', 'Play / Pause', PLAYPAUSE), () => this.togglePlay()],
@@ -275,10 +274,7 @@ export class MusicPlayer {
       this.started = true;
       this.apiError = false;
       void this.connect();
-      void describe(MUSIC.uri).then((m) => {
-        this.home = m;
-        this.render();
-      });
+      this.describeHome();
     }
   }
 
@@ -302,7 +298,7 @@ export class MusicPlayer {
   private async connect() {
     try {
       const api = await loadApi();
-      api.createController(this.embedHost, { uri: MUSIC.uri, width: '100%', height: EMBED_H }, (c) => {
+      api.createController(this.embedHost, { uri: this.uri, width: '100%', height: EMBED_H }, (c) => {
         this.ctl = c;
         c.addListener('playback_update', (e) => this.onUpdate(e.data as PlaybackUpdate));
         c.addListener('error', () => (this.sub.textContent = 'Spotify could not play that.'));
@@ -392,7 +388,7 @@ export class MusicPlayer {
   private turn(notches: number, turned: number) {
     play('menu-hover', 0.8);
     if (this.menuOpen) {
-      this.menuSel = Math.max(0, Math.min(this.menuItems.length - 1, this.menuSel + Math.sign(notches)));
+      this.menuSel = Math.max(0, Math.min(this.items().length - 1, this.menuSel + Math.sign(notches)));
       return this.render();
     }
     if (!this.ctl || !this.s.duration) return;
@@ -431,7 +427,7 @@ export class MusicPlayer {
   }
 
   private select() {
-    if (this.menuOpen) return this.menuItems[this.menuSel]?.run();
+    if (this.menuOpen) return this.items()[this.menuSel]?.run();
     this.togglePlay();
   }
 
@@ -450,7 +446,62 @@ export class MusicPlayer {
 
   private setMenu(open: boolean) {
     this.menuOpen = open;
+    this.menuPage = 'main';
     if (open) this.menuSel = 0;
+    this.render();
+  }
+
+  private get uri() {
+    return MUSIC.playlists[this.current].uri;
+  }
+
+  /** MENU backs out of the playlist list first, then closes the menu, like the real thing. */
+  private menuKey() {
+    if (this.menuOpen && this.menuPage === 'lists') {
+      this.menuPage = 'main';
+      this.menuSel = 1;
+      return this.render();
+    }
+    this.setMenu(!this.menuOpen);
+  }
+
+  private items(): MenuItem[] {
+    if (this.menuPage === 'lists') {
+      return MUSIC.playlists.map((p, i) => ({ label: p.name, run: () => this.switchTo(i), checked: i === this.current, plain: i !== this.current }));
+    }
+    return [
+      { label: 'Now Playing', run: () => this.setMenu(false) },
+      { label: 'Playlists', run: () => ((this.menuPage = 'lists'), (this.menuSel = this.current), this.render()) },
+      { label: 'Spotify Player', run: () => (this.toggleSheet(true), this.setMenu(false)) },
+      { label: 'Open in Spotify', run: () => window.open(webUrl(this.uri), '_blank', 'noopener') },
+    ];
+  }
+
+  private describeHome() {
+    const uri = this.uri;
+    void describe(uri).then((m) => {
+      if (this.uri !== uri) return;
+      this.home = m;
+      this.render();
+    });
+  }
+
+  /** Loads another playlist into the embed and starts it. */
+  private switchTo(i: number) {
+    this.setMenu(false);
+    if (i === this.current) return;
+    this.current = i;
+    this.s = { paused: true, buffering: false, duration: 0, position: 0, stamp: 0, uri: '' };
+    this.meta = null;
+    this.home = null;
+    this.metaFor = '';
+    this.scrub = null;
+    this.describeHome();
+    if (this.ctl) {
+      this.ctl.loadUri(this.uri);
+      this.ctl.play();
+      this.waiting = performance.now();
+    }
     this.render();
   }
 
@@ -509,10 +560,10 @@ export class MusicPlayer {
     this.remain.textContent = `-${fmt(duration - pos)}`;
 
     this.screen.classList.toggle('menu', this.menuOpen);
-    this.barTitle.textContent = this.menuOpen ? 'Music' : 'Now Playing';
+    this.barTitle.textContent = this.menuOpen ? (this.menuPage === 'lists' ? 'Playlists' : 'Music') : 'Now Playing';
     if (this.menuOpen) {
       this.menuEl.replaceChildren(
-        ...this.menuItems.map((m, i) => el('div', { class: `pod-row${i === this.menuSel ? ' sel' : ''}`, text: m.label })),
+        ...this.items().map((m, i) => el('div', { class: `pod-row${i === this.menuSel ? ' sel' : ''}${m.checked ? ' check' : ''}${m.plain ? ' plain' : ''}`, text: m.label })),
       );
     }
   }

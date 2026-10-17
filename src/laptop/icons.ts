@@ -3,7 +3,8 @@ import type { DesktopApp, DesktopNode } from './desktop';
 /**
  * Icons are inline SVG strings (no image files, per the repo rule), drawn in the glossy Aqua style of early-2000s
  * Mac OS X: gradients, a white gloss on top, soft edges. Stylised placeholders, not exact artwork. Gradients and
- * patterns are defined once in DEFS, which MacScreen puts in the DOM.
+ * patterns are defined once in DEFS, which MacScreen puts in the DOM. The exceptions are the GitHub, LinkedIn and
+ * Mail icons: those are the real logo files from public/laptop/logos, not drawings.
  */
 export const DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <linearGradient id="mi-fback" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cbcf0"/><stop offset="1" stop-color="#3a7fcf"/></linearGradient>
@@ -17,7 +18,6 @@ export const DEFS = `<svg width="0" height="0" style="position:absolute" aria-hi
   <linearGradient id="mi-finr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#78b0f6"/><stop offset="1" stop-color="#1d55c4"/></linearGradient>
   <linearGradient id="mi-page" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e9ecf0"/></linearGradient>
   <radialGradient id="mi-globe" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9fd2ff"/><stop offset=".6" stop-color="#3b8fe6"/><stop offset="1" stop-color="#1d5cb0"/></radialGradient>
-  <linearGradient id="mi-mail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cc4f2"/><stop offset="1" stop-color="#2f74c8"/></linearGradient>
   <linearGradient id="mi-wa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63e583"/><stop offset="1" stop-color="#1bb653"/></linearGradient>
   <linearGradient id="mi-notes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d8cf0"/><stop offset="1" stop-color="#0a56c2"/></linearGradient>
   <linearGradient id="mi-screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d6be0"/><stop offset="1" stop-color="#9a5ad6"/></linearGradient>
@@ -75,6 +75,10 @@ function gear(cx: number, cy: number, r: number, teeth: number) {
   return `<polygon points="${pts.join(' ')}"/>`;
 }
 
+/** An official logo file from public/laptop/logos, placed in the 64×64 icon box. */
+const logo = (file: string, x: number, y: number, w: number, h: number) =>
+  `<image href="${import.meta.env.BASE_URL}laptop/logos/${file}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
+
 export const ICON = {
   folder: folderIcon(),
   appsFolder: folderIcon(EMBLEM.apps),
@@ -86,11 +90,8 @@ export const ICON = {
   webloc: page(
     `<circle cx="32" cy="38" r="12" fill="url(#mi-globe)" stroke="#1f5fae" stroke-width=".8"/><path d="M20 38h24M32 26c-4.5 3.5-4.5 20.5 0 24M32 26c4.5 3.5 4.5 20.5 0 24M22.5 31.5h19M22.5 44.5h19" fill="none" stroke="#e8f3ff" stroke-width="1" opacity=".85"/>`,
   ),
-  mail: svg(
-    `<path d="M8 10h48v44H8z" fill="#fff" stroke="#a8aeb6" stroke-width=".8" stroke-dasharray="2.2 1.6"/><rect x="12" y="14" width="40" height="36" fill="url(#mi-mail)"/>` +
-      `<rect x="17" y="24" width="30" height="20" rx="1.5" fill="#fbfbf8" stroke="#6b7480" stroke-width=".8"/><path d="M17.5 24.5L32 36l14.5-11.5" fill="none" stroke="#6b7480" stroke-width="1.2"/>` +
-      `<path d="M12 14h40v10c-14 5-26 5-40 0z" fill="#fff" opacity=".28"/>`,
-  ),
+  // Apple's own Mail stamp from Leopard / Snow Leopard, not a drawing.
+  mail: svg(logo('mail-stamp.png', 0, 0, 64, 64)),
   finder: svg(
     `<rect x="5" y="5" width="54" height="54" rx="9" fill="url(#mi-finr)"/>` +
       `<path d="M14 5h20c-3 9-7 17-5 27h5c-2 8-1 18 3 27H14a9 9 0 0 1-9-9V14a9 9 0 0 1 9-9z" fill="url(#mi-finl)"/>` +
@@ -186,6 +187,9 @@ const APP_ART: Record<string, string> = {
     `<rect x="5" y="5" width="54" height="54" rx="12" fill="#fff" stroke="#d6d9de"/><g stroke-linecap="round" stroke-width="7"><path d="M24 14v13" stroke="#36c5f0"/><path d="M40 37v13" stroke="#2eb67d"/><path d="M14 40h13" stroke="#e01e5a"/><path d="M37 24h13" stroke="#ecb22e"/><path d="M40 14v6" stroke="#2eb67d"/><path d="M24 44v6" stroke="#ecb22e"/><path d="M14 24h6" stroke="#36c5f0"/><path d="M44 40h6" stroke="#e01e5a"/></g>` +
       gloss(5, 5, 54, 54, 12),
   ),
+  // The mark's cat is cut out of the circle, so a white disc behind it keeps it readable on a dark Dock.
+  github: svg(`<circle cx="32" cy="32.2" r="27" fill="#fff"/>` + logo('github-mark.svg', 3, 3, 58, 58)),
+  linkedin: svg(logo('linkedin-in-bug.png', 4, 4, 56, 56)),
   notes: svg(
     `<rect x="5" y="5" width="54" height="54" rx="12" fill="url(#mi-notes)"/><circle cx="32" cy="32" r="16" fill="#fff"/><path d="M24 27h16M24 33h16M24 39h9" stroke="#0a56c2" stroke-width="3" stroke-linecap="round"/>` +
       gloss(5, 5, 54, 54, 12),
