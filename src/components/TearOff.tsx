@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import "./tear-off.css";
+import { playFall, playRip, primeTearSound, type RipBurst } from "./tear-sound";
 
 /**
  * The old portfolio as a paper cover over the Mac. A pull-tab hangs from the top of the page; pulling it (or
@@ -13,8 +14,10 @@ type Phase = "cover" | "tearing" | "gone";
 
 /** Pulling the tab this far (px) commits the tear; a plain click does too. */
 const COMMIT_PX = 36;
-const RIP_MS = 520;
-const FALL_MS = 1150;
+/** Gravity for the falling halves, px/s². */
+const GRAVITY = 2600;
+/** A half lets go of the bottom edge once it has leaned this far (radians) and falls free. */
+const RELEASE_RAD = 0.32;
 
 const loadMac = () => import("@/laptop/MacScreen");
 
@@ -22,6 +25,59 @@ interface Piece {
   root: HTMLElement;
   rim: HTMLElement;
   clip: HTMLElement;
+}
+
+/** A spurt of tearing: from `t` ms for `dur` ms, the rip runs from fraction `p0` to `p1` of the page. */
+interface Spurt {
+  t: number;
+  dur: number;
+  p0: number;
+  p1: number;
+}
+
+/**
+ * Paper doesn't rip at an even speed: it snaps at the perforation, catches, then gives way in a few spurts.
+ * Returns the spurts and the total time, in ms.
+ */
+function ripPlan() {
+  const spurts: Spurt[] = [{ t: 0, dur: 80, p0: 0, p1: 0.05 + Math.random() * 0.04 }];
+  let t = 80 + 120 + Math.random() * 60;
+  let p = spurts[0].p1;
+  const parts = [0.42, 0.33, 0.25].map((f) => f * (0.8 + Math.random() * 0.4));
+  const sum = parts.reduce((a, b) => a + b, 0);
+  parts.forEach((f, i) => {
+    const to = i === parts.length - 1 ? 1 : p + ((1 - spurts[0].p1) * f) / sum;
+    const dur = 50 + (to - p) * 480;
+    spurts.push({ t, dur, p0: p, p1: to });
+    t += dur + 35 + Math.random() * 60;
+    p = to;
+  });
+  const last = spurts[spurts.length - 1];
+  return { spurts, total: last.t + last.dur };
+}
+
+/** How far the rip has got at `ms`, 0 to 1, and how hard it is tearing right now (0 between spurts). */
+function ripAt(spurts: Spurt[], ms: number) {
+  let p = 0;
+  for (const s of spurts) {
+    if (ms < s.t) break;
+    const u = Math.min(1, (ms - s.t) / s.dur);
+    p = s.p0 + (s.p1 - s.p0) * (1 - Math.pow(1 - u, 2));
+    if (u < 1) return { p, force: 1 - u };
+  }
+  return { p, force: 0 };
+}
+
+/** A scrap of paper fibre shaken loose by the rip. */
+interface Fleck {
+  el: HTMLElement;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  r: number;
+  vr: number;
+  phase: number;
 }
 
 /** A tear line from the tab at `x0`: a gentle random walk down the page plus small zigzag teeth, in viewport px. */
@@ -107,13 +163,15 @@ export default function TearOff({ children }: { children: ReactNode }) {
     const left = make("left");
     const right = make("right");
 
-    // The cover's own elements go; the Mac opens beneath the halves.
+    // The cover's own elements go; the Mac's wallpaper shows through the rip, and its desktop assembles once
+    // the halves have let go.
     document.documentElement.classList.add("tear-locked");
     page.style.visibility = "hidden";
-    macScreen().open(() => {
-      page.style.visibility = "";
-      putBack();
-    });
+    const open = (ready: Promise<void>) =>
+      macScreen().open(() => {
+        page.style.visibility = "";
+        putBack();
+      }, ready);
 
     /** Clip both halves for a rip that has reached `tip` px down the page. The gap is widest at the top. */
     const shape = (tip: number) => {
@@ -132,35 +190,160 @@ export default function TearOff({ children }: { children: ReactNode }) {
       if (flap.current) flap.current.style.transform = `translate(${end.x - fx}px, ${tip}px) rotate(${(end.x - fx) * 0.05}deg)`;
     };
 
+    // Scraps of paper that fly off the torn edge and drift down.
+    const dust = document.createElement("div");
+    dust.className = "tear-flecks";
+    document.body.append(dust);
+    const flecks: Fleck[] = [];
+    const fleck = (x: number, y: number, kick = 1) => {
+      if (flecks.length > 60) return;
+      const el = document.createElement("i");
+      const size = 3 + Math.random() * 7;
+      el.style.width = `${size}px`;
+      el.style.height = `${size * (0.4 + Math.random() * 0.8)}px`;
+      dust.append(el);
+      flecks.push({ el, x, y, vx: (Math.random() - 0.5) * 260 * kick, vy: (-40 - Math.random() * 120) * kick, r: Math.random() * 360, vr: (Math.random() - 0.5) * 900, phase: Math.random() * 6 });
+    };
+    const moveFlecks = (dt: number, now: number) => {
+      for (let i = flecks.length - 1; i >= 0; i--) {
+        const f = flecks[i];
+        // Light and draggy: they fall slowly and sway.
+        f.vy = Math.min(220, f.vy + GRAVITY * 0.22 * dt);
+        f.vx *= 1 - 1.8 * dt;
+        f.x += (f.vx + Math.sin(now / 160 + f.phase) * 40) * dt;
+        f.y += f.vy * dt;
+        f.r += f.vr * dt;
+        f.el.style.transform = `translate(${f.x}px, ${f.y}px) rotate(${f.r}deg) rotateX(${f.r * 1.7}deg)`;
+        if (f.y > h + 20) {
+          f.el.remove();
+          flecks.splice(i, 1);
+        }
+      }
+    };
+
+    let released: () => void = () => {};
+    const fallen = new Promise<void>((r) => (released = r));
     const finish = () => {
       left.root.remove();
       right.root.remove();
+      dust.remove();
       setPhase("gone");
     };
 
     if (reduced) {
+      // The Mac shows at once; the halves just fade.
+      open(Promise.resolve());
       shape(h + 20);
       for (const p of [left, right]) p.root.classList.add("fade");
       window.setTimeout(finish, 400);
       return;
     }
+    open(fallen);
 
-    // Rip down the page, quickly at first and slowing as it reaches the bottom.
-    const t0 = performance.now();
-    const rip = (now: number) => {
-      const k = Math.min(1, (now - t0) / RIP_MS);
-      shape(24 + (h + 20 - 24) * (1 - Math.pow(1 - k, 2.2)));
-      if (k < 1) return requestAnimationFrame(rip);
-      // Then each half drops away, falling outwards.
-      for (const p of [left, right]) p.root.classList.add("fall");
-      window.setTimeout(finish, FALL_MS + 120);
+    const { spurts, total } = ripPlan();
+    playRip(spurts.map((sp, i): RipBurst => ({ at: sp.t / 1000, dur: sp.dur / 1000, amt: i === 0 ? 0.6 : 0.75 + Math.random() * 0.25 })));
+
+    // Each half is a falling sheet hinged at its outer bottom corner: it leans out, gravity tips it over faster and
+    // faster, then it lets go and tumbles away, swinging in 3D as it catches the air.
+    const halves = [left, right].map((p, i) => ({
+      p,
+      dir: i === 0 ? -1 : 1,
+      lean: 0,
+      spin: 0.4,
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      free: false,
+      t: 0,
+      delay: i === 0 ? 0 : 0.05 + Math.random() * 0.05,
+      wobble: 0.9 + Math.random() * 0.4,
+    }));
+    const pose = (hv: (typeof halves)[number], jx = 0, jy = 0) => {
+      const swing = hv.dir * Math.sin(hv.t * 5.2 * hv.wobble) * Math.min(22, hv.t * 40);
+      const pitch = Math.sin(hv.t * 3.4 * hv.wobble + 1) * Math.min(14, hv.t * 26);
+      hv.p.root.style.transform = `perspective(1600px) translate(${hv.x + jx}px, ${hv.y + jy}px) rotate(${hv.dir * hv.lean}rad) rotateY(${swing}deg) rotateX(${pitch}deg)`;
     };
-    requestAnimationFrame(rip);
+
+    const t0 = performance.now();
+    let last = t0;
+    let ripping = true;
+    let fallT0 = 0;
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      moveFlecks(dt, now);
+
+      if (ripping) {
+        const ms = now - t0;
+        const { p, force } = ripAt(spurts, ms);
+        const tip = 24 + (h + 20 - 24) * p;
+        shape(tip);
+        // The page shudders while it tears, and the halves start to sag apart.
+        const shake = force * (ms < 100 ? 3 : 1.6);
+        for (const hv of halves) {
+          hv.lean = p * 0.025;
+          pose(hv, (Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+        }
+        const at = line.find((pt) => pt.y >= tip) ?? line[line.length - 1];
+        if (force > 0 && Math.random() < 0.7) fleck(at.x, Math.min(tip, h - 4), ms < 100 ? 1.6 : 1);
+        if (ms >= total) {
+          ripping = false;
+          fallT0 = now;
+          shape(h + 20);
+          for (let i = 0; i < 14; i++) {
+            const pt = line[Math.floor(Math.random() * line.length)];
+            fleck(pt.x, Math.min(pt.y, h - 4), 1.3);
+          }
+          playFall(0.05);
+        }
+        return requestAnimationFrame(frame);
+      }
+
+      const since = (now - fallT0) / 1000;
+      let gone = true;
+      for (const hv of halves) {
+        if (since < hv.delay) {
+          gone = false;
+          continue;
+        }
+        hv.t += dt;
+        if (!hv.free) {
+          // A rod tipping over about its foot: angular acceleration grows with the lean.
+          hv.spin += (0.6 + 7.5 * Math.sin(hv.lean)) * dt;
+          hv.lean += hv.spin * dt;
+          if (hv.lean > RELEASE_RAD) {
+            hv.free = true;
+            hv.vx = hv.dir * hv.spin * h * 0.35;
+            hv.vy = hv.spin * w * 0.12 - 60;
+          }
+        } else {
+          hv.vy += GRAVITY * dt;
+          hv.vx *= 1 - 0.4 * dt;
+          hv.x += hv.vx * dt;
+          hv.y += hv.vy * dt;
+          hv.spin *= 1 - 0.6 * dt;
+          hv.lean += hv.spin * dt;
+        }
+        pose(hv);
+        if (hv.y < h * 1.1) gone = false;
+      }
+      // Let the desktop assemble as soon as both halves are well on their way.
+      if (halves.every((hv) => hv.free)) released();
+      if (gone && since > 0.4) {
+        released();
+        // A few last scraps can finish drifting on their own.
+        return window.setTimeout(finish, flecks.length ? 600 : 0);
+      }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
   }, [phase, putBack]);
 
   const onDown = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (phase !== "cover") return;
     e.currentTarget.setPointerCapture(e.pointerId);
+    primeTearSound();
     drag.current = { id: e.pointerId, y0: e.clientY, moved: false };
     void loadMac();
   };
@@ -202,7 +385,7 @@ export default function TearOff({ children }: { children: ReactNode }) {
             onPointerMove={onMove}
             onPointerUp={onUp}
             onPointerCancel={() => (drag.current = null)}
-            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), void tear())}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), primeTearSound(), void tear())}
           >
             <span className="tear-flap-grip" aria-hidden="true" />
             <span className="tear-flap-text">pull</span>

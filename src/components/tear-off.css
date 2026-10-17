@@ -54,10 +54,14 @@ html.tear-locked, html.tear-locked body { overflow: hidden; }
 .tear-copy { position: absolute; left: 0; }
 .tear-piece.left { transform-origin: 0 100%; }
 .tear-piece.right { transform-origin: 100% 100%; }
-.tear-piece.fall { transition: transform 1.15s cubic-bezier(0.55, 0, 0.85, 0.4), opacity 1.15s ease-in; }
-.tear-piece.left.fall { transform: translate(-22vw, 115vh) rotate(-24deg); }
-.tear-piece.right.fall { transform: translate(22vw, 120vh) rotate(21deg); transition-delay: 0.07s; }
 .tear-piece.fade { transition: opacity 0.35s ease; opacity: 0; }
+
+/* Scraps of paper fibre shaken loose by the rip (moved by TearOff.tsx). */
+.tear-flecks { position: fixed; inset: 0; z-index: 5050; pointer-events: none; overflow: hidden; }
+.tear-flecks i {
+  position: absolute; left: 0; top: 0; background: #f1ebde; box-shadow: inset 0 0 0 0.5px rgba(120, 105, 80, 0.35);
+  clip-path: polygon(8% 20%, 45% 0, 92% 14%, 100% 62%, 70% 100%, 22% 88%, 0 55%); will-change: transform;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .tear-flap, .tear-flap-arrow { animation: none; }

@@ -42,10 +42,12 @@ scripts/laptop-sounds.mjs
 - `<TearOff>` wraps every route. Phases: `cover` (old site + tab) → `tearing` → `gone` (old site `display: none`, page scroll locked by `html.tear-locked`). Shut Down on the Mac calls the `onClose` passed to `macScreen().open()`, which puts the cover back and restores the scroll position.
 - The halves are **static clones** of the page at the moment of tearing (`cloneNode`), clipped with `clip-path` polygons along a random jagged line that starts under the tab. The rim layer behind each clone (`.tear-rim`, cream) is clipped a few px wider so the torn edge shows white paper fibre. The real React tree is never moved or re-rendered.
 - Sticky elements (the nav) are measured before cloning and pinned in the clones with `position: relative; top`, because a clone outside the scroller would otherwise show them at the top of the document.
+- The rip runs in irregular spurts (`ripPlan()`: a snap at the perforation, a catch, then a few bursts) with the page shuddering and paper flecks flying off the edge. Then each half tips over its outer bottom corner under gravity, lets go at `RELEASE_RAD` and tumbles away, swinging in 3D; it is all one rAF loop, no CSS transitions. Sounds (snap, crackling rip per spurt, flutter-whoosh of the fall) are synthesized in `tear-sound.ts`, kept out of the Mac's chunk; it honours the Mac's mute setting and is primed on the tab's pointerdown/keydown.
+- The Mac opens with no start-up screens or chime: its wallpaper shows through the rip and the desktop assembles once both halves have let go (`macScreen().open(onClose, ready)`). Restart inside the Mac still plays the full boot.
 - Pulling the tab past `COMMIT_PX` or a plain click/tap/Enter commits; there is no un-tearing. The Mac module is prefetched ~1 s after load (`loadMac()`), so the rip never waits on the network. `prefers-reduced-motion` gets a fade instead of the rip and fall.
 - z-order: Mac `.mac-root` 1000, falling halves 5000, the tab 5100. The old site's own Radix portals (toasts, Contact dialog) are only usable while the cover is up.
 - On phones (≤640px) the tab hangs right of centre so it doesn't cover the name in the nav.
-- Testing the rip under automation: the fall is a CSS transition and the halves remove themselves after it. To inspect a frozen frame, add a style that cancels `.tear-piece.fall` transitions and temporarily stub `Element.prototype.remove` for `.tear-piece`.
+- Testing the rip under automation: the rip and fall are driven by `requestAnimationFrame` and the halves remove themselves after it. To inspect a frozen frame, stub `requestAnimationFrame` (or `Element.prototype.remove` for `.tear-piece`) before clicking the tab.
 
 ## The Mac (`src/laptop`)
 

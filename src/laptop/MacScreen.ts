@@ -209,8 +209,12 @@ export class MacScreen {
     return this.root.classList.contains('open');
   }
 
-  /** Shows the laptop. `onClose` runs once when it is shut again, by any route. */
-  open(onClose: () => void) {
+  /**
+   * Shows the laptop. `onClose` runs once when it is shut again, by any route. Opening skips the start-up screens
+   * and chime: the wallpaper shows at once and the desktop assembles when `ready` resolves (the torn page falling
+   * away). Restart still plays the whole boot.
+   */
+  open(onClose: () => void, ready: Promise<unknown> = Promise.resolve()) {
     if (this.isOpen) return;
     this.onClose = onClose;
     this.refreshChrome();
@@ -221,7 +225,13 @@ export class MacScreen {
     void preloadSounds();
     this.lastInput = performance.now();
     this.idleTimer = window.setInterval(() => this.checkIdle(), 5000);
-    if (this.off) void this.bootUp();
+    if (this.off) {
+      this.off = false;
+      this.busy = true;
+      this.root.classList.add('booting');
+      this.blackout.classList.remove('on');
+      void ready.then(() => this.arrive());
+    }
     // One tick later, so the key press that opened it can't also close it.
     setTimeout(() => window.addEventListener('keydown', this.onKey, true), 0);
   }
