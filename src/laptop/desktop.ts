@@ -97,6 +97,7 @@ export const DESKTOP: DesktopNode[] = [
         text: ['Occupations', '- SWE @ Turtlemint', '- SWE Intern @ Turtlemint', '- Ex Agent Developer @ Spaider-Space', '- Ex Research Intern @ Distilled DDD'],
       },
       { type: 'file', id: 'profile', name: 'me.png', icon: 'image', src: 'images/profile.png', text: ['Ketan Kunkalikar'] },
+      { type: 'file', id: 'cover-letter', name: 'me.pdf', icon: 'pdf', text: [], src: 'laptop/docs/me.pdf' },
     ],
   },
   {
