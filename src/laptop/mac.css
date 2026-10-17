@@ -684,6 +684,27 @@
   flex: 1; resize: none; border: 0; outline: none; padding: 14px 18px; background: transparent; color: #111;
   font: 12px/1.45 Monaco, Menlo, "Courier New", monospace; user-select: text; -webkit-user-select: text; cursor: text !important;
 }
+/* A .md file: rendered view by default, with a Rendered / Markdown switch. */
+.te-mdbar { flex: none; display: flex; justify-content: center; gap: 0; padding: 4px 0 6px; }
+.te-tab { font: 11px/1 "Lucida Grande", Helvetica, sans-serif; padding: 4px 12px; border: 0.5px solid var(--edge); background: var(--btn); color: var(--text); cursor: default; }
+.te-tab:first-child { border-radius: 10px 0 0 10px; }
+.te-tab:last-child { border-radius: 0 10px 10px 0; margin-left: -0.5px; }
+.te-tab.on { background: color-mix(in srgb, var(--accent) 35%, var(--btn)); font-weight: 700; }
+.te-md { flex: 1; min-width: 0; overflow: auto; padding: 14px 22px 18px; color: #111; font: 13px/1.5 Helvetica, Arial, sans-serif; user-select: text; -webkit-user-select: text; cursor: text; }
+.te-md[hidden], .te-area[hidden] { display: none; }
+.te-md h1, .te-md h2, .te-md h3, .te-md h4 { margin: 1.1em 0 0.4em; line-height: 1.2; }
+.te-md > :first-child { margin-top: 0; }
+.te-md h1 { font-size: 22px; } .te-md h2 { font-size: 17px; border-bottom: 1px solid #ddd; padding-bottom: 3px; } .te-md h3 { font-size: 14px; } .te-md h4 { font-size: 13px; }
+.te-md p { margin: 0 0 10px; }
+.te-md ul, .te-md ol { margin: 0 0 10px; padding-left: 22px; }
+.te-md ul { list-style: disc; } .te-md ol { list-style: decimal; } .te-md ul ul { list-style: circle; }
+.te-md li { margin: 2px 0; }
+.te-md code { font: 12px Monaco, Menlo, monospace; background: #f0f0f0; padding: 1px 4px; border-radius: 3px; }
+.te-md pre { margin: 0 0 10px; padding: 8px 10px; background: #f0f0f0; border-radius: 4px; overflow: auto; }
+.te-md pre code { background: none; padding: 0; }
+.te-md blockquote { margin: 0 0 10px; padding: 0 0 0 12px; border-left: 3px solid #ccc; color: #555; }
+.te-md hr { border: 0; border-top: 1px solid #ddd; margin: 14px 0; }
+.te-md a { color: #0a56c8; text-decoration: underline; cursor: pointer; }
 .mac-win-body > .doc.te { margin: 0 4px 4px; }
 
 /* ---------- Calculator (fixed hardware colours, like the real one) ---------- */

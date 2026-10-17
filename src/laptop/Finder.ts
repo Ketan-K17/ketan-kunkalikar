@@ -31,7 +31,7 @@ const HD_ITEMS: DesktopFolder[] = [
   { type: 'folder', id: '__locked-system', name: 'System', children: [] },
 ];
 
-export const kindOf = (n: DesktopNode) => (n.type === 'folder' ? 'Folder' : n.type === 'app' ? 'Application' : n.icon === 'image' ? 'JPEG image' : n.icon === 'pdf' ? 'PDF document' : n.icon === 'link' ? 'Internet Location' : 'Plain Text Document');
+export const kindOf = (n: DesktopNode) => (n.type === 'folder' ? 'Folder' : n.type === 'app' ? 'Application' : n.icon === 'image' ? 'JPEG image' : n.icon === 'pdf' ? 'PDF document' : n.icon === 'link' ? 'Internet Location' : /\.md$/i.test(n.name) ? 'Markdown document' : 'Plain Text Document');
 
 export function itemsOf(loc: Loc): DesktopNode[] {
   switch (loc.kind) {
