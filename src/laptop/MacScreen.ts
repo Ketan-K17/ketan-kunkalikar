@@ -453,16 +453,17 @@ export class MacScreen {
   }
 
   /** Closing a Mail message with something typed in it. */
-  private askDiscard(win: MacWindow, proceed: () => void) {
+  private askDiscard(win: MacWindow, mail: Mail, proceed: () => void) {
     this.wm.restore(win);
     this.wm.focus(win);
     this.sheet(win, {
       title: 'Do you want to save this message as a draft?',
-      text: 'There is nowhere to keep drafts on this laptop, so closing it throws the message away.',
+      text: 'The draft is kept in this browser, and comes back the next time you open Mail.',
       icon: ICON.mail,
       buttons: [
-        { label: 'Discard', left: true, run: proceed },
-        { label: 'Cancel', default: true, cancel: true },
+        { label: "Don't Save", left: true, run: () => (mail.discardDraft(), proceed()) },
+        { label: 'Cancel', cancel: true },
+        { label: 'Save', default: true, run: () => (mail.saveDraft(), proceed()) },
       ],
     });
   }
@@ -567,7 +568,7 @@ export class MacScreen {
     if (app && this.wm.windowsOf(app.name).length && id !== 'textedit' && id !== 'preview') return this.bringApp(app.name);
     if (id === 'mail') {
       const mail = new Mail(() => this.wm.close(win));
-      const win = this.openWin({ app: 'Mail', title: 'New Message', width: 480, height: 400, minWidth: 340, minHeight: 300, key: 'mail', content: mail.el, icon: ICON.mail, unified: true, origin: origin ?? this.dock.rectOf('mail'), onCloseRequest: (close) => (mail.dirty ? this.askDiscard(win, close) : close()) });
+      const win = this.openWin({ app: 'Mail', title: 'New Message', width: 480, height: 400, minWidth: 340, minHeight: 300, key: 'mail', content: mail.el, icon: ICON.mail, unified: true, origin: origin ?? this.dock.rectOf('mail'), onCloseRequest: (close) => (mail.dirty ? this.askDiscard(win, mail, close) : close()) });
       setTimeout(() => mail.focus(), 320);
     } else if (id === 'calculator') {
       const calc = new Calculator();

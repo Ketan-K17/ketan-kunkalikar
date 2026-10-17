@@ -2,6 +2,8 @@ import { USER } from '../desktop';
 import { el } from '../dom';
 import { play } from '../sound';
 
+const DRAFT_KEY = 'laptop-mail-draft';
+
 /**
  * Mail: a Tiger-style New Message window addressed to the owner. Sending goes through Web3Forms with the same
  * VITE_WEB3FORMS_ACCESS_KEY the old site's contact form uses, so no backend is needed.
@@ -39,6 +41,35 @@ export class Mail {
       ),
       el('div', { class: 'mail-page' }, this.fields.body),
     );
+    this.restoreDraft();
+  }
+
+  /** The unsent message from last time, if the visitor chose to keep one. */
+  private restoreDraft() {
+    try {
+      const d = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? 'null');
+      if (!d) return;
+      for (const k of Object.keys(this.fields) as (keyof typeof this.fields)[]) this.fields[k].value = String(d[k] ?? '');
+    } catch {
+      /* no storage, or a corrupt draft: start empty */
+    }
+  }
+
+  saveDraft() {
+    try {
+      const d = Object.fromEntries(Object.entries(this.fields).map(([k, f]) => [k, f.value]));
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    } catch {
+      /* storage unavailable: the draft is simply not kept */
+    }
+  }
+
+  discardDraft() {
+    try {
+      localStorage.removeItem(DRAFT_KEY);
+    } catch {
+      /* nothing to remove */
+    }
   }
 
   /** True once anything has been typed, so closing asks first. */
@@ -86,6 +117,7 @@ export class Mail {
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.message);
+      this.discardDraft();
       play('mail-sent');
       this.say('Sent. Thanks for writing!');
       setTimeout(() => this.done(), 900);
