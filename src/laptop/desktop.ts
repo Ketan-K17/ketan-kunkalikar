@@ -71,74 +71,14 @@ export const DESKTOP: DesktopNode[] = [
     id: 'about',
     name: 'About Me',
     children: [
-      {
-        type: 'file',
-        id: 'readme',
-        name: 'README.txt',
-        text: [
-          'Ketan Kunkalikar',
-          'AI Engineer and Agent Developer.',
-          'SWE @ Turtlemint. Ex Agent Developer @ Spaider-Space.',
-          'Open-source contributor fascinated with AI, Large Language Models, and Agentic Systems.',
-          'Have a look around: projects are in Projects, what I am learning now is in Current Endeavours, and Mail (in the Dock) reaches me directly.',
-        ],
-      },
-      { type: 'file', id: 'education', name: 'education.txt', text: ['Education', 'BTech in Computer Science and Engineering, National Institute of Technology, Goa.'] },
-      {
-        type: 'file',
-        id: 'research',
-        name: 'research.txt',
-        text: ['Research', 'Large Language Models, model finetuning on consumer devices, and agentic systems, with applications in Natural Language Processing and automation.'],
-      },
-      {
-        type: 'file',
-        id: 'work',
-        name: 'work.txt',
-        text: ['Occupations', '- SWE @ Turtlemint', '- SWE Intern @ Turtlemint', '- Ex Agent Developer @ Spaider-Space', '- Ex Research Intern @ Distilled DDD'],
-      },
       { type: 'file', id: 'profile', name: 'me.png', icon: 'image', src: 'images/profile.png', text: ['Ketan Kunkalikar'] },
       { type: 'file', id: 'cover-letter', name: 'me.pdf', icon: 'pdf', text: [], src: 'laptop/docs/me.pdf' },
     ],
   },
   {
     type: 'folder',
-    id: 'projects',
-    name: 'Projects',
-    children: [
-      project(
-        'claude-dr',
-        'Claude Deep Research',
-        '2025',
-        "MCP to incorporate a Deep Research feature on Claude Desktop. A LangGraph workflow that does deep research on a given query, wired into Claude's desktop app through an MCP server.",
-        'https://github.com/Ketan-K17/claude_with_dr',
-      ),
-      project(
-        'sagan',
-        'SAGAN',
-        '2024-2025',
-        "A multi-modal AI agent workflow that automates grant proposal writing from a corpus of research papers and legal documents. Implemented and deployed as a service; acquired by Luxembourg's Space Agency in March 2025 for USD 50K.",
-        'https://github.com/Ketan-K17/sagan_backend',
-      ),
-      project(
-        'web-nav',
-        'Web Navigator',
-        '2025',
-        'A multi-modal AI agent workflow that automates web navigation: a LangGraph agent with agentic decision making, paired with computer vision and computer control. Built as my final-year project.',
-        'https://github.com/Ketan-K17/web_automation_agent_backend',
-      ),
-      project(
-        'adaptive-rag',
-        'Adaptive RAG',
-        '2024',
-        'An AI application that performs Adaptive RAG over a corpus of documents and uses what it retrieves to answer questions. Deployed on Hugging Face Spaces.',
-        'https://github.com/Ketan-K17/adaptive_rag_application_poc',
-      ),
-    ],
-  },
-  {
-    type: 'folder',
     id: 'endeavours',
-    name: 'Current Endeavours',
+    name: 'What am I up to?',
     children: [
       {
         type: 'folder',
@@ -189,9 +129,9 @@ export const DESKTOP: DesktopNode[] = [
     text: [
       '# Quick Tips',
       '## Getting started\n- Launch apps from the Dock, Finder (Applications), Spotlight (⌘ Space) or the Apple menu\n- Several apps and windows can be open at once\n- Drag a window by its title bar to move it, drag its edges to resize, and click the yellow button to minimise it to the Dock\n- Double-click an icon (or select it and press Enter) to open it; drag icons around the desktop and they stay where you drop them\n- System Preferences changes the look: light or dark, Aqua or Glass, accent colour, wallpaper and sounds',
-      '## Finder\n- Browse About Me, Projects and Current Endeavours; Applications lists everything in the Dock\n- Icon, list and column views (⌘1, ⌘2, ⌘3), a sidebar, search, and back / forward history\n- ⌘I shows Get Info for a file: its kind, size and where it lives\n- Move files to the Trash with ⌘⌫ and empty it with ⇧⌘⌫; nothing is lost for good, it all comes back when the page reloads',
+      '## Finder\n- Browse About Me and Current Endeavours; Applications lists everything in the Dock\n- Icon, list and column views (⌘1, ⌘2, ⌘3), a sidebar, search, and back / forward history\n- ⌘I shows Get Info for a file: its kind, size and where it lives\n- Move files to the Trash with ⌘⌫ and empty it with ⇧⌘⌫; nothing is lost for good, it all comes back when the page reloads',
       '## TextEdit\n- `.txt` files open for editing: type away and press ⌘S to save\n- `.md` files like this one open rendered; switch to **Markdown** at the top to see and edit the source\n- Format > Show Ruler (⌘R) toggles the ruler in plain-text files\n- Closing a window with unsaved changes asks first\n- Your edits are kept in *your* browser only, so feel free to scribble',
-      '## Preview\n- Opens pictures and PDFs, including my resume\n- Internet Locations (like the Repository files in Projects) open the page in a new browser tab',
+      '## Preview\n- Opens pictures and PDFs, including my resume\n- Internet Locations open the page in a new browser tab',
       '## Mail\n- The envelope in the Dock opens a New Message addressed to me\n- Write a subject and a note and press Send, and it lands in my inbox\n- Half-written drafts are kept in this browser until you send them',
       '## Music\n- The lavender click-wheel player on the desktop plays Spotify playlists\n- The centre button plays and pauses; MENU opens the list (Now Playing, Playlists, Spotify Player, Open in Spotify)\n- Slide a finger around the ring to scrub, or to move through the menu\n- Log in to Spotify in this browser for full songs; otherwise you get 30-second previews\n- Drag the player by its body to put it somewhere else',
       '## Terminal\n- A small pretend shell: `ls`, `cd`, `pwd`, `cat`, `open`, `echo`, `date`, `cal`, `whoami`, `history`, `fortune`, `clear` and more\n- `cat README.txt` prints a file and `open <name>` opens it in its window\n- Type `help` for the full list',
