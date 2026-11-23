@@ -114,6 +114,8 @@ export const DESKTOP: DesktopNode[] = [
               'check out my dotfiles repo lol: https://github.com/Ketan-K17/my_dotfiles',
             ],
           },
+          { type: 'app', id: 'dotfiles-repo', name: 'My Dotfiles', url: 'https://github.com/Ketan-K17/my_dotfiles', color: 0x24292f, glyph: 'GH' },
+          { type: 'app', id: 'streams', name: 'My Streams!', url: 'https://www.youtube.com/live/dcpOuwWFlnc?si=pAJA2NAqIVVCWxzS&t=1020', color: 0xff0000, glyph: '▶' },
         ],
       },
     ],

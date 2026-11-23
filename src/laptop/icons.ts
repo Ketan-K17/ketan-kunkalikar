@@ -189,6 +189,9 @@ const APP_ART: Record<string, string> = {
   ),
   // The mark's cat is cut out of the circle, so a white disc behind it keeps it readable on a dark Dock.
   github: svg(`<circle cx="32" cy="32.2" r="27" fill="#fff"/>` + logo('github-mark.svg', 3, 3, 58, 58)),
+  youtube: svg(
+    `<rect x="5" y="15" width="54" height="34" rx="11" fill="#f00"/><path d="M26 23l16 9-16 9z" fill="#fff"/>` + gloss(5, 15, 54, 34, 11),
+  ),
   linkedin: svg(logo('linkedin-in-bug.png', 4, 4, 56, 56)),
   notes: svg(
     `<rect x="5" y="5" width="54" height="54" rx="12" fill="url(#mi-notes)"/><circle cx="32" cy="32" r="16" fill="#fff"/><path d="M24 27h16M24 33h16M24 39h9" stroke="#0a56c2" stroke-width="3" stroke-linecap="round"/>` +
@@ -197,7 +200,7 @@ const APP_ART: Record<string, string> = {
 };
 
 // The laptop's own apps (fs.ts SYSTEM_APPS) wear their real icons wherever an app icon is drawn.
-Object.assign(APP_ART, { mail: ICON.mail, calculator: ICON.calculator, terminal: ICON.terminal, textedit: ICON.textedit, preview: ICON.preview, prefs: ICON.prefs, dashboard: ICON.dashboard, profiler: ICON.profiler });
+Object.assign(APP_ART, { 'dotfiles-repo': APP_ART.github, streams: APP_ART.youtube, mail: ICON.mail, calculator: ICON.calculator, terminal: ICON.terminal, textedit: ICON.textedit, preview: ICON.preview, prefs: ICON.prefs, dashboard: ICON.dashboard, profiler: ICON.profiler });
 
 const hex = (n: number) => `#${n.toString(16).padStart(6, '0')}`;
 
